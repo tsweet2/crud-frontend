@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -16,10 +17,15 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class UserFormComponent {
     user = { firstName: '', lastName: '', phoneNumber: '', emailAddress: '' };
-    constructor(private userService: UserService) {}
-    async saveUser() { await this.userService.addUser(this.user); }
-
-    onSubmit() {
-        this.saveUser();
+    constructor(private userService: UserService, private snackBar: MatSnackBar) {}
+  
+    async onSubmit() {
+        try {
+            await this.userService.addUser(this.user);
+            this.snackBar.open('User added', 'Close', { duration: 3000 });
+        } catch (error) {
+            this.snackBar.open('Error adding user', 'Close', { duration: 3000 });
+            console.error('Add error:', error);
+        }
     }
 }

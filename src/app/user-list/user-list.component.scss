@@ -1,3 +1,14 @@
-.mat-elevation-z8 {
-margin: 30px;
-}
+.table-container {
+    margin: 0 30px; // Adds 30px whitespace on the left and right
+    padding: 20px;  // Adds spacing inside the table container
+    display: flex;
+    justify-content: center;
+  }
+  
+  mat-table {
+    background: white; // Ensures shadow is visible
+    border-radius: 8px; // Optional: Makes corners rounded
+    display: block; // Fixes table layout issues
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2) !important; // Ensures shadow appears
+  }
+  

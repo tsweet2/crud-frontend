@@ -1,7 +1,17 @@
 .toolbar {
   display: flex;
-  justify-content: space-between;
+
   margin-bottom: 1rem;
   background-color: blueviolet;
   color: white;
+}
+
+.spacer {
+  margin-right: 30px;
+}
+.menu-button:hover {
+    color: white;
+}
+.menu-button {
+    color: yellow
 }

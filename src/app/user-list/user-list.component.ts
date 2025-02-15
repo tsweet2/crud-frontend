@@ -7,6 +7,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { async } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../shared-components/confirm-dialog/confirm-dialog.component';
 
 @Component({
     selector: 'app-user-list',
@@ -26,21 +28,48 @@ lastName: any; name: string
 }[] = [];
 displayedColumns: string[] = ['firstName', 'lastName', 'phoneNumber', 'emailAddress', 'delete'];
   
-    constructor(private userService: UserService, private snackBar: MatSnackBar) {}
+    constructor(private userService: UserService, private snackBar: MatSnackBar, private dialog: MatDialog) {}
     async ngOnInit() { 
       this.users = await this.userService.getUsers();
       console.log(this.users);
     }
 
-    async onDelete(userID: number) {
-      try {
-          await this.userService.deleteUser(userID);
-          this.users = this.users.filter(user => user.userID !== userID);
-          this.snackBar.open('User deleted', 'Close', { duration: 3000 });
-      } catch (error) {
-          this.snackBar.open('Error deleting user', 'Close', { duration: 3000 });
-          console.error('Delete error:', error);
-      }
+    openConfirmDialog(userID: number) {
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '250px',
+        data: { message: 'Are you sure you want to delete this user?' }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.onDelete(userID);
+        }
+      });
     }
-        
+
+    confirmDelete(userID: number) {
+      
+    }
+    onDelete(userID: number) {
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '350px',
+        data: {
+          message: 'Are you sure you want to delete this user?',
+          confirmText: 'Yes, Delete',
+          cancelText: 'Cancel'
+        }
+      });
+    
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.userService.deleteUser(userID).then(() => {
+            this.users = this.users.filter(user => user.userID !== userID);
+            this.snackBar.open('User deleted', 'Close', { duration: 3000 });
+          });
+        } else {
+          console.log('User canceled deletion');
+          this.snackBar.open('Action Canceled', 'Close', { duration: 3000 });
+        }
+      });
+    }
 }
