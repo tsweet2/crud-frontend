@@ -19,9 +19,9 @@ export class UserFormComponent {
     user = { firstName: '', lastName: '', phoneNumber: '', emailAddress: '' };
     constructor(private userService: UserService, private snackBar: MatSnackBar) {}
   
-    async onSubmit() {
+    onSubmit() {
         try {
-            await this.userService.addUser(this.user);
+            this.userService.addUser(this.user);
             this.snackBar.open('User added', 'Close', { duration: 3000 });
         } catch (error) {
             this.snackBar.open('Error adding user', 'Close', { duration: 3000 });

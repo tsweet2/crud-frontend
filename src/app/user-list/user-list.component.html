@@ -1,5 +1,6 @@
 <div class="table-container">
-    <mat-table [dataSource]="users" class="mat-elevation-z8">
+      <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      
       <ng-container matColumnDef="lastName">
         <mat-header-cell *matHeaderCellDef> Last Name </mat-header-cell>
         <mat-cell *matCellDef="let user"> {{ user.lastName }} </mat-cell>
@@ -23,7 +24,7 @@
       <ng-container matColumnDef="delete">
         <mat-header-cell *matHeaderCellDef> Delete </mat-header-cell>
         <mat-cell *matCellDef="let user">
-          <button mat-icon-button color="warn" (click)="onDelete(user.userID)">
+          <button mat-icon-button color="warn" (click)="openConfirmDialog(user.userID)">
             <mat-icon>delete</mat-icon>
           </button>
         </mat-cell>
@@ -33,4 +34,5 @@
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
   </div>
+  
   
