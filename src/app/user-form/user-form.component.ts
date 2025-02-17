@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { User } from '../User.model';
 
 
 @Component({
@@ -20,12 +21,15 @@ export class UserFormComponent {
     constructor(private userService: UserService, private snackBar: MatSnackBar) {}
   
     onSubmit() {
-        try {
-            this.userService.addUser(this.user);
-            this.snackBar.open('User added', 'Close', { duration: 3000 });
-        } catch (error) {
-            this.snackBar.open('Error adding user', 'Close', { duration: 3000 });
-            console.error('Add error:', error);
-        }
-    }
+        const newUser: User = {
+          firstName: this.user.firstName,
+          lastName: this.user.lastName,
+          phoneNumber: this.user.phoneNumber,
+          emailAddress: this.user.emailAddress
+        };
+      
+        this.userService.addUser(newUser).subscribe(response => {
+          console.log('User added:', response);
+        });
+      }
 }

@@ -15,7 +15,7 @@ export class UserService {
   }
 
   loadUsers() {
-    this.http.get<any[]>(this.apiUrl).subscribe(users => {
+    this.http.get<User[]>(this.apiUrl).subscribe(users => {
       this.usersSubject.next(users);
     });
   }
@@ -24,14 +24,18 @@ export class UserService {
     return this.users$; // Always returns an Observable
   }
 
-  addUser(user: { firstName: string; lastName: string; phoneNumber: string; emailAddress: string; }): Observable<User> {
-    return this.http.post<User>(this.apiUrl, {}).pipe(
-      tap(() => this.loadUsers()) // Refresh users after addition
-    );
-  }
+  addUser(user: User): Observable<User> {
+  console.log("Sending user:", user); // ✅ Debugging
+  return this.http.post<User>(this.apiUrl, user).pipe(
+    tap(() => {
+      console.log("User added successfully"); // ✅ Debugging
+      this.loadUsers();
+    })
+  );
+}
 
-  deleteUser(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`).pipe(
+  deleteUser(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
       tap(() => this.loadUsers()) // Refresh users after deletion
     );
   }
