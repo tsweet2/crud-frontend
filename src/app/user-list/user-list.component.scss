@@ -1,14 +1,53 @@
 .table-container {
-    margin: 0 30px; // Adds 30px whitespace on the left and right
-    padding: 20px;  // Adds spacing inside the table container
-    display: flex;
-    justify-content: center;
-  }
-  
-  mat-table {
-    background: white; // Ensures shadow is visible
-    border-radius: 8px; // Optional: Makes corners rounded
-    display: block; // Fixes table layout issues
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2) !important; // Ensures shadow appears
-  }
-  
+    width: 100%;
+    max-width: 1000px; /* Allow more space for columns */
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    overflow-x: auto; /* Allow horizontal scrolling when needed */
+}
+
+.user-table {
+    width: 100%;
+    border-radius: 10px;
+    table-layout: fixed; /* Ensures columns stay proportional */
+}
+
+.mat-header-cell, .mat-cell {
+    padding: 12px 16px;
+    font-size: 14px;
+    text-align: left;
+    white-space: nowrap; /* Prevents text from wrapping by default */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ng-container[matColumnDef="emailAddress"] .mat-cell {
+    white-space: normal; /* Allow email text to wrap */
+    word-break: break-word; /* Force break if too long */
+    min-width: 200px; /* Ensure reasonable width */
+    max-width: 300px; /* Prevent it from taking too much space */
+}
+
+.delete-column {
+    text-align: center;
+    width: 80px;
+}
+
+.delete-cell {
+    text-align: center;
+}
+
+/* Button hover effect */
+button.mat-icon-button {
+    transition: transform 0.2s ease-in-out;
+    
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+
+
+

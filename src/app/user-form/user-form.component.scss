@@ -1,13 +1,43 @@
-.user-form2 {
+.user-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f4f6f8;
+    padding: 20px;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    gap: 30px; // optional: adds spacing between form fields
-
-    .field {
-        width: 300px;
-    }
-
-    button {
-        width: 50px;
-    }
+    gap: 16px;
+    position: relative; /* Allows moving up */
+    top: -40px; /* Moves the container up about an inch */
 }
+
+.form-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.field {
+    width: 100%;
+}
+
+.submit-btn {
+    width: 100%;
+    height: 45px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+

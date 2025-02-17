@@ -1,17 +1,43 @@
 .toolbar {
-  display: flex;
-
-  margin-bottom: 1rem;
-  background-color: blueviolet;
-  color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    background: #1976d2; // Primary color
+    color: white;
+    height: 64px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
+
+.toolbar-title {
+    font-size: 24px; /* Large and prominent */
+    font-weight: bold; /* Stands out */
+    background: linear-gradient(45deg, #ffcc00, #ff5733); /* Stylish gradient */
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; /* Apply gradient to text */
+    font-style: italic; /* Elegant touch */
+    padding-right: 5px; /* Prevents cutting off the 'y' */
+    display: inline-block; /* Ensures text is fully rendered */
+}
+
 
 .spacer {
-  margin-right: 30px;
+    flex-grow: 1;
 }
-.menu-button:hover {
-    color: white;
+
+.menu-items {
+    display: flex;
+    gap: 15px;
 }
+
 .menu-button {
-    color: yellow
+    font-weight: 600;
+    font-size: 14px;
+    color: white !important;
+    text-transform: uppercase;
+    transition: background 0.3s ease;
+    
+    &:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
 }

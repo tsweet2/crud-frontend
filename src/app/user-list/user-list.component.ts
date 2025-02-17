@@ -11,10 +11,11 @@ import { ConfirmDialogComponent } from '../shared-components/confirm-dialog/conf
 import { Observable } from 'rxjs';
 import { User } from '../User.model';
 import { HttpClient } from '@angular/common/http';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatSortModule, MatIconModule],
+  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatSortModule, MatIconModule, MatTooltipModule],
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
   providers: [UserService, HttpClient]

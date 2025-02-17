@@ -1,50 +1,42 @@
 <form (ngSubmit)="onSubmit()" #userForm="ngForm" class="user-form">
-    <div class="user-form2">
-        <h1>ADD USER</h1>
-        <mat-form-field appearance="fill" class="field">
+    <div class="form-container">
+        <h1 class="form-title">Add User</h1>
+
+        <mat-form-field appearance="outline" class="field">
             <mat-label>First Name</mat-label>
             <input matInput type="text" id="firstName" required [(ngModel)]="user.firstName" name="firstName" #firstName="ngModel">
             <mat-error *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
-                <div *ngIf="firstName.errors?.['required']">
-                    First Name is required.
-                </div>
+                <div *ngIf="firstName.errors?.['required']">First Name is required.</div>
             </mat-error>
         </mat-form-field>
     
-        <mat-form-field appearance="fill" class="field">
+        <mat-form-field appearance="outline" class="field">
             <mat-label>Last Name</mat-label>
-            <input class="field" matInput type="text" id="lastName" required [(ngModel)]="user.lastName" name="lastName" #lastName="ngModel">
+            <input matInput type="text" id="lastName" required [(ngModel)]="user.lastName" name="lastName" #lastName="ngModel">
             <mat-error *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
-                <div *ngIf="lastName.errors?.['required']">
-                    Last Name is required.
-                </div>
+                <div *ngIf="lastName.errors?.['required']">Last Name is required.</div>
             </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="fill" class="field">
+
+        <mat-form-field appearance="outline" class="field">
             <mat-label>Telephone Number</mat-label>
             <input matInput type="tel" id="telephone" required [(ngModel)]="user.phoneNumber" name="telephone" #telephone="ngModel">
             <mat-error *ngIf="telephone.invalid && (telephone.dirty || telephone.touched)">
-                <div *ngIf="telephone.errors?.['required']">
-                    Telephone Number is required.
-                </div>
+                <div *ngIf="telephone.errors?.['required']">Telephone Number is required.</div>
             </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="fill" class="field">
+
+        <mat-form-field appearance="outline" class="field">
             <mat-label>Email</mat-label>
             <input matInput type="email" id="email" required [(ngModel)]="user.emailAddress" name="email" #email="ngModel">
             <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
-                <div *ngIf="email.errors?.['required']">
-                    Email is required.
-                </div>
-                <div *ngIf="email.errors?.['email']">
-                    Invalid email address.
-                </div>
+                <div *ngIf="email.errors?.['required']">Email is required.</div>
+                <div *ngIf="email.errors?.['email']">Invalid email address.</div>
             </mat-error>
         </mat-form-field>
     
-        <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid">
+        <button mat-raised-button color="primary" type="submit" class="submit-btn" [disabled]="userForm.invalid">
             Save
         </button>
     </div>
-    
 </form>
