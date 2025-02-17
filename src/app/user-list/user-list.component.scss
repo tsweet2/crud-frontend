@@ -10,6 +10,8 @@
 }
 
 .user-table {
+    background-color: #ffffff !important;
+    color: black !important;
     width: 100%;
     border-radius: 10px;
     table-layout: fixed; /* Ensures columns stay proportional */
@@ -48,6 +50,10 @@ button.mat-icon-button {
         transform: scale(1.1);
     }
 }
+
+
+
+
 
 
 
