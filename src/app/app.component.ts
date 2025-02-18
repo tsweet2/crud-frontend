@@ -18,7 +18,6 @@ export class AppComponent {
   title = 'crud-frontend';
 
   isAuthenticated(): boolean {
-    console.log('Checking if user is authenticated...' + this.authService.isAuthenticated());
     return this.authService.isAuthenticated(); // ✅ Check if user is logged in
   }
 

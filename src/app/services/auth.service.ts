@@ -32,12 +32,10 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     const token = this.getToken();
-    console.log('🛠 Checking authentication: Token exists?', !!token);
     return !!this.getToken(); // ✅ Check if user is authenticated
   }
 
   logout(): void {
-    console.log('🚪 Logging out: Removing JWT and redirecting to login.');
     if(confirm("Are you sure you want to log out?")) {
     localStorage.removeItem('jwt'); // ✅ Remove stored token
     this.router.navigate(['/login']); // ✅ Redirect to login page

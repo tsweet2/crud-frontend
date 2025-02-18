@@ -14,11 +14,14 @@ import { User } from '../User.model';
 import { HttpClient } from '@angular/common/http';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
+import { EditUserComponent } from '../edit-user/edit-user.component';
+import { FormsModule } from '@angular/forms';
+import { MatInput, MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatSortModule, MatIconModule, MatTooltipModule],
+  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatSortModule, MatIconModule, MatTooltipModule, FormsModule, MatInputModule],
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
   providers: [UserService, HttpClient]
@@ -28,7 +31,7 @@ export class UserListComponent implements OnInit {
   dataSource = new MatTableDataSource<any>([]);
   users$: Observable<User[]> | undefined; 
 
-  displayedColumns: string[] = ['firstName', 'lastName', 'phoneNumber', 'emailAddress', 'delete'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'phoneNumber', 'emailAddress', 'actions'];
 
   constructor(
     private userService: UserService,
@@ -65,6 +68,29 @@ export class UserListComponent implements OnInit {
       }
     });
   }
+
+  editUser(user: User) {
+    console.log("🛠 Editing user:", user); // ✅ Debugging log
+    const dialogRef = this.dialog.open(EditUserComponent, {
+      width: '400px',
+      data: { ...user } // ✅ Ensure userID is included
+    });
+  
+    dialogRef.afterClosed().subscribe(updatedUser => {
+      if (updatedUser && updatedUser.id) {
+        this.userService.updateUser(updatedUser).subscribe({
+          next: () => {
+            console.log('✅ User updated successfully');
+            this.userService.loadUsers(); // Refresh user list
+          },
+          error: (err) => console.error("❌ Error updating user:", err)
+        });
+      } else {
+        console.error("❌ Update failed: userID missing or dialog closed without changes.");
+      }
+    });
+  }
+  
 
   onDelete(userID: number) {
     this.userService.deleteUser(userID).subscribe({

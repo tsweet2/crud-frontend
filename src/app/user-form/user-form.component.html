@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()" #userForm="ngForm" class="user-form">
+<form (ngSubmit)="onSubmit(userForm)" #userForm="ngForm" class="user-form">
     <div class="form-container">
         <h1 class="form-title">Add User</h1>
 
@@ -34,9 +34,32 @@
                 <div *ngIf="email.errors?.['email']">Invalid email address.</div>
             </mat-error>
         </mat-form-field>
-    
-        <button mat-raised-button color="primary" type="submit" class="submit-btn" [disabled]="userForm.invalid">
-            Save
-        </button>
+
+        <!-- ✅ Add Password Field -->
+        <mat-form-field appearance="outline" class="field">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" id="password" required [(ngModel)]="user.password" name="password" #password="ngModel">
+            <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
+                <div *ngIf="password.errors?.['required']">Password is required.</div>
+            </mat-error>
+        </mat-form-field>
+
+        <!-- ✅ Add Role Dropdown -->
+        
+            <mat-label>Role</mat-label>
+            <mat-select [(ngModel)]="user.role" name="role" required #role="ngModel">
+                <mat-option value="USER">User</mat-option>
+                <mat-option value="ADMIN">Admin</mat-option>
+            </mat-select>
+            <mat-error *ngIf="role.invalid && (role.dirty || role.touched)">
+                <div *ngIf="role.errors?.['required']">Role is required.</div>
+            </mat-error>
+        
+
+            <button mat-raised-button color="primary" type="submit" class="submit-btn" [disabled]="isSubmitting || userForm.invalid">
+                {{ isSubmitting ? 'Saving...' : 'Save' }}
+              </button>
+              
     </div>
 </form>
+

@@ -25,7 +25,6 @@ export class UserService {
 
   loadUsers() {
     this.http.get<User[]>(this.apiUrl, { headers: this.getHeaders() }).subscribe(users => {
-      console.log("✅ Users retrieved:", users);
       this.usersSubject.next(users);
     },
     error => {
@@ -38,14 +37,19 @@ export class UserService {
   }
 
   addUser(user: User): Observable<User> {
-    console.log("Sending user:", user);
     return this.http.post<User>(this.apiUrl, user, { headers: this.getHeaders() }).pipe(
       tap(() => {
-        console.log("User added successfully");
         this.loadUsers();
       })
     );
   }
+
+  updateUser(user: User): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/${user.id}`, user).pipe(
+      tap(() => console.log('✅ User updated successfully'))
+    );
+  }
+  
 
   deleteUser(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() }).pipe(
