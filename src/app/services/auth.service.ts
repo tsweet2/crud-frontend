@@ -38,9 +38,11 @@ export class AuthService {
 
   logout(): void {
     console.log('🚪 Logging out: Removing JWT and redirecting to login.');
+    if(confirm("Are you sure you want to log out?")) {
     localStorage.removeItem('jwt'); // ✅ Remove stored token
     this.router.navigate(['/login']); // ✅ Redirect to login page
   }
+}
 }
 
 
