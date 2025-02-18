@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { map, Observable, tap } from 'rxjs';
 export class AuthService {
   private apiUrl = 'http://localhost:8080/api/auth/login';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   login(email: string, password: string): Observable<string> {
     return this.http.post<{ token: string }>(this.apiUrl, { emailAddress: email, password }).pipe(
@@ -30,11 +31,15 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
+    const token = this.getToken();
+    console.log('🛠 Checking authentication: Token exists?', !!token);
     return !!this.getToken(); // ✅ Check if user is authenticated
   }
 
   logout(): void {
-    localStorage.removeItem('jwt'); // ✅ Clear JWT on logout
+    console.log('🚪 Logging out: Removing JWT and redirecting to login.');
+    localStorage.removeItem('jwt'); // ✅ Remove stored token
+    this.router.navigate(['/login']); // ✅ Redirect to login page
   }
 }
 

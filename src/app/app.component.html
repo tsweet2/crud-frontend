@@ -2,8 +2,9 @@
   <span class="toolbar-title">User Utility</span>
   <span class="spacer"></span>
   <div class="menu-items">
-    <a mat-button class="menu-button" routerLink="/user-form">Create User</a>
-    <a mat-button class="menu-button" routerLink="/user-list">Show Users</a>
+    <a *ngIf="isAuthenticated()" mat-button class="menu-button" routerLink="/user-form">Create User</a>
+    <a *ngIf="isAuthenticated()" mat-button class="menu-button" routerLink="/user-list">Show Users</a>
+    <button *ngIf="isAuthenticated()" mat-button class="menu-button" (click)="logout()">LOGOUT</button>
   </div>
 </mat-toolbar>
 
