@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
+import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -12,6 +13,8 @@ import { Observable } from 'rxjs';
 import { User } from '../User.model';
 import { HttpClient } from '@angular/common/http';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-user-list',
   standalone: true,
@@ -19,7 +22,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
   providers: [UserService, HttpClient]
-
 })
 export class UserListComponent implements OnInit {
 
@@ -30,16 +32,23 @@ export class UserListComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private authService: AuthService, // ✅ Inject AuthService
+    private router: Router, // ✅ Inject Router
     private snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {}
 
   ngOnInit() {
+    if (!this.authService.isAuthenticated()) {
+      this.router.navigate(['/login']); // ✅ Redirect if not authenticated
+      return;
+    }
+
     this.userService.users$.subscribe(users => {
-      this.dataSource.data = users; // Correctly assigns array data
+      this.dataSource.data = users;
     });
   }
-  
+
   openConfirmDialog(userID: number) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '350px',
@@ -61,12 +70,11 @@ export class UserListComponent implements OnInit {
     this.userService.deleteUser(userID).subscribe({
       next: () => {
         this.snackBar.open('User deleted', 'Close', { duration: 3000 });
-        // No need to manually update users$, it's handled in the service
       },
       error: () => {
         this.snackBar.open('Error deleting user', 'Close', { duration: 3000 });
       }
     });
-  }  
+  }
 }
 
