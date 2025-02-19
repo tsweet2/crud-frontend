@@ -1,6 +1,6 @@
 <mat-toolbar class="toolbar">
   <span class="toolbar-title">User Utility</span>
-  
+
   <div class="menu-items-left">
     <a *ngIf="isAuthenticated()" mat-button class="menu-button" routerLink="/user-form">Create User</a>
     <a *ngIf="isAuthenticated()" mat-button class="menu-button" routerLink="/user-list">Show Users</a>
@@ -8,8 +8,27 @@
 
   <span class="spacer"></span>
 
+  <!-- Settings Menu Trigger -->
+  <button *ngIf="isAuthenticated()" mat-icon-button class="menu-button settings-button" [matMenuTriggerFor]="settingsMenu">
+    <mat-icon>settings</mat-icon>
+  </button>
+
+  <!-- Logout Button -->
   <button *ngIf="isAuthenticated()" mat-button class="menu-button logout-button" (click)="logout()">LOGOUT</button>
 </mat-toolbar>
 
+<!-- Settings Dropdown Menu -->
+<mat-menu #settingsMenu="matMenu">
+  <div class="settings-menu-header">
+    <span class="user-email">{{ userEmail || 'Not Logged In' }}</span>
+  </div>
+  <mat-divider></mat-divider>
+  <button mat-menu-item (click)="openChangePasswordDialog()">
+    <mat-icon>lock</mat-icon> Change Password
+  </button>
+</mat-menu>
+
+
 <router-outlet></router-outlet>
+
 

@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +13,8 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login(email: string, password: string): Observable<{ token: string; role: string }> {
-    return this.http.post<{ token: string; role: string }>(this.apiUrl, { email, password }).pipe(
+  login(emailAddress: string, password: string): Observable<{ token: string; role: string }> {
+    return this.http.post<{ token: string; role: string }>(this.apiUrl, { emailAddress, password }).pipe(
       tap((response) => {
         if (response.token) {
           this.storeToken(response.token); // ✅ Store JWT
@@ -23,6 +25,19 @@ export class AuthService {
     );
   }
 
+  getUserEmail(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+    try {
+      const decoded: any = jwtDecode(token);
+      return decoded.sub;
+    } catch (error) {
+    console.error("Error decoding token:", error);
+    return null;
+    }
+  }
+
+  
   storeToken(token: string): void {
     localStorage.setItem('jwt', token); // ✅ Ensure JWT is stored properly
   }
