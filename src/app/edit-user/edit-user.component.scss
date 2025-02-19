@@ -1,0 +1,49 @@
+.dialog-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+}
+
+.edit-user-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-field {
+    width: 100%;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+}
+
+.cancel-button {
+    color: #d32f2f; // Red for cancel action
+    font-weight: bold;
+    transition: 0.3s ease;
+
+    &:hover {
+        background: rgba(211, 47, 47, 0.1);
+    }
+}
+
+.save-button {
+    font-weight: bold;
+    transition: 0.3s ease;
+
+    &:hover {
+        background: rgba(25, 118, 210, 0.1); // Subtle blue hover effect
+    }
+}

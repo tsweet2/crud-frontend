@@ -7,10 +7,11 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-edit-user',
-  imports: [MatDialogModule, MatFormFieldModule, CommonModule, FormsModule, MatOptionModule, MatInputModule, MatSelectModule],
+  imports: [MatDialogModule, MatFormFieldModule, CommonModule, FormsModule, MatOptionModule, MatInputModule, MatSelectModule, MatButtonModule],
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.scss']
 })

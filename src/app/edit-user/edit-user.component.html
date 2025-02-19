@@ -1,29 +1,28 @@
-<h2 mat-dialog-title>Edit User</h2>
-<mat-dialog-content>
-  <form>
-    <mat-form-field appearance="outline">
+<h2 mat-dialog-title class="dialog-title">Edit User</h2>
+
+<mat-dialog-content class="dialog-content">
+  <form class="edit-user-form">
+    <mat-form-field appearance="outline" class="form-field">
       <mat-label>First Name</mat-label>
       <input matInput [(ngModel)]="user.firstName" name="firstName" required>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="form-field">
       <mat-label>Last Name</mat-label>
       <input matInput [(ngModel)]="user.lastName" name="lastName" required>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="form-field">
       <mat-label>Email</mat-label>
       <input matInput type="email" [(ngModel)]="user.emailAddress" name="emailAddress" required>
     </mat-form-field>
 
-    <!-- ✅ Add Password Field -->
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="form-field">
       <mat-label>Password</mat-label>
       <input matInput type="password" [(ngModel)]="user.password" name="password" required>
     </mat-form-field>
 
-    <!-- ✅ Fix Role Dropdown -->
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="form-field">
       <mat-label>Role</mat-label>
       <mat-select [(ngModel)]="user.role" name="role" required>
         <mat-option value="USER">User</mat-option>
@@ -33,8 +32,9 @@
   </form>
 </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-  <button mat-button (click)="cancel()">Cancel</button>
-  <button mat-button color="primary" (click)="save()">Save</button>
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-button class="cancel-button" (click)="cancel()">Cancel</button>
+  <button mat-button color="primary" class="save-button" (click)="save()">Save</button>
 </mat-dialog-actions>
+
 
