@@ -9,14 +9,15 @@
 }
 
 .toolbar-title {
-    font-size: 24px; /* Large and prominent */
+    font-size: 36px; /* Large and prominent */
     font-weight: bold; /* Stands out */
     background: linear-gradient(45deg, #ffcc00, #ff5733); /* Stylish gradient */
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent; /* Apply gradient to text */
     font-style: italic; /* Elegant touch */
-    padding-right: 5px; /* Prevents cutting off the 'y' */
+    padding-right: 5px;
+    margin-right: 25px; /* Prevents cutting off the 'y' */
     display: inline-block; /* Ensures text is fully rendered */
 }
 

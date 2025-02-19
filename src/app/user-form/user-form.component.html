@@ -37,7 +37,7 @@
 
         <!-- ✅ Add Password Field -->
         <mat-form-field appearance="outline" class="field">
-            <mat-label>Password</mat-label>
+            <mat-label>Initial Password</mat-label>
             <input matInput type="password" id="password" required [(ngModel)]="user.password" name="password" #password="ngModel">
             <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
                 <div *ngIf="password.errors?.['required']">Password is required.</div>
@@ -46,16 +46,16 @@
 
         <!-- ✅ Add Role Dropdown -->
         
+        <mat-form-field appearance="outline" style="width: 100%;">
             <mat-label>Role</mat-label>
             <mat-select [(ngModel)]="user.role" name="role" required #role="ngModel">
-                <mat-option value="USER">User</mat-option>
-                <mat-option value="ADMIN">Admin</mat-option>
+              <mat-option value="USER">User</mat-option>
+              <mat-option value="ADMIN">Admin</mat-option>
             </mat-select>
+          </mat-form-field>
             <mat-error *ngIf="role.invalid && (role.dirty || role.touched)">
                 <div *ngIf="role.errors?.['required']">Role is required.</div>
             </mat-error>
-        
-
             <button mat-raised-button color="primary" type="submit" class="submit-btn" [disabled]="isSubmitting || userForm.invalid">
                 {{ isSubmitting ? 'Saving...' : 'Save' }}
               </button>
