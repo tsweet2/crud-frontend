@@ -21,17 +21,19 @@ export class EditUserComponent {
   ) {}
 
   save(): void {
-    if (!this.user.id) {
+    console.log(this.user);
+    if (!this.user.userID) {
       console.error("❌ Error: userID is missing, cannot update user.");
       return;
     }
   
-    console.log("🛠 Sending update request for userID:", this.user.id);
+    console.log("🛠 Sending update request for userID:", this.user.userID);
     this.dialogRef.close(this.user); // Send the user data back to the parent
   }
   
 
   cancel(): void {
-    this.dialogRef.close(); // Close dialog without saving
+    console.log("❌ Edit canceled, closing dialog.");
+    this.dialogRef.close();
   }
-}
+}  

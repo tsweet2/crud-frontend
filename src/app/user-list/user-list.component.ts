@@ -77,17 +77,26 @@ export class UserListComponent implements OnInit {
     });
   
     dialogRef.afterClosed().subscribe(updatedUser => {
-      if (updatedUser && updatedUser.id) {
-        this.userService.updateUser(updatedUser).subscribe({
-          next: () => {
-            console.log('✅ User updated successfully');
-            this.userService.loadUsers(); // Refresh user list
-          },
-          error: (err) => console.error("❌ Error updating user:", err)
-        });
-      } else {
-        console.error("❌ Update failed: userID missing or dialog closed without changes.");
+      console.log("🔄 Dialog closed. Received updated user:", updatedUser);
+
+      if (!updatedUser) {
+        console.error("❌ No user data received from dialog.");
+        return;
       }
+  
+      if (!updatedUser.userID) {
+        console.error("❌ Updated user is missing userID:", updatedUser);
+        return;
+      }
+  
+      console.log("📡 Sending update request for userID:", updatedUser.userID);
+      this.userService.updateUser(updatedUser).subscribe({
+        next: () => {
+          console.log('✅ User updated successfully');
+          this.userService.loadUsers(); // Refresh user list
+        },
+        error: (err) => console.error("❌ Error updating user:", err)
+      });
     });
   }
   
@@ -103,4 +112,3 @@ export class UserListComponent implements OnInit {
     });
   }
 }
-

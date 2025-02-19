@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { User } from '../User.model';
 import { AuthService } from './auth.service';
@@ -45,15 +45,43 @@ export class UserService {
   }
 
   updateUser(user: User): Observable<User> {
-    return this.http.put<User>(`${this.apiUrl}/${user.id}`, user).pipe(
-      tap(() => console.log('✅ User updated successfully'))
-    );
-  }
+      const token = localStorage.getItem('jwt'); // ✅ Retrieve token from storage
+    
+      if (!token) {
+        console.error("❌ No JWT token found, user is not authenticated.");
+        return throwError(() => new Error("Unauthorized: No JWT token"));
+      }
+    
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // ✅ Attach token to request
+      });
+    
+      console.log(`📡 Sending API request: PUT /api/users/${user.userID}`, user, headers);
+    
+      return this.http.put<User>(`${this.apiUrl}/${user.userID}`, user, { headers }).pipe(
+        tap(() => console.log('✅ User updated successfully'))
+      );
+    }
+  
   
 
-  deleteUser(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() }).pipe(
-      tap(() => this.loadUsers())
-    );
-  }
+    deleteUser(userID: number): Observable<void> {
+      const token = localStorage.getItem('jwt'); // ✅ Retrieve token
+    
+      if (!token) {
+        console.error("❌ No JWT token found, user is not authenticated.");
+        return throwError(() => new Error("Unauthorized: No JWT token"));
+      }
+    
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}` // ✅ Attach token
+      });
+    
+      console.log(`📡 Sending API request: DELETE /api/users/${userID}`, headers);
+    
+      return this.http.delete<void>(`${this.apiUrl}/${userID}`, { headers }).pipe(
+        tap(() => console.log(`✅ User ${userID} deleted successfully`))
+      );
+    }
 }
