@@ -101,14 +101,21 @@ export class UserListComponent implements OnInit {
   }
   
 
-  onDelete(userID: number) {
+  onDelete(user: any) {
+    if (!user || !user.userID) {
+      console.error("❌ Error: Invalid user object for deletion:", user);
+      return;
+    }
+  
+    const userID = user.userID; // ✅ Extract userID correctly
+    console.log(`🗑️ Attempting to delete user with ID: ${userID}`);
+  
     this.userService.deleteUser(userID).subscribe({
       next: () => {
-        this.snackBar.open('User deleted', 'Close', { duration: 3000 });
+        console.log(`✅ User ${userID} deleted successfully`);
+        this.userService.loadUsers(); // Refresh user list
       },
-      error: () => {
-        this.snackBar.open('Error deleting user', 'Close', { duration: 3000 });
-      }
+      error: (err) => console.error("❌ Error deleting user:", err)
     });
   }
 }

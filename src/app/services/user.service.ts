@@ -67,6 +67,11 @@ export class UserService {
   
 
     deleteUser(userID: number): Observable<void> {
+      if (!userID) {
+        console.error("❌ Error: userID is missing for delete request.");
+        return throwError(() => new Error("Invalid userID for deletion"));
+      }
+    
       const token = localStorage.getItem('jwt'); // ✅ Retrieve token
     
       if (!token) {
@@ -78,7 +83,7 @@ export class UserService {
         'Authorization': `Bearer ${token}` // ✅ Attach token
       });
     
-      console.log(`📡 Sending API request: DELETE /api/users/${userID}`, headers);
+      console.log(`📡 Sending API request: DELETE /api/users/${userID}`);
     
       return this.http.delete<void>(`${this.apiUrl}/${userID}`, { headers }).pipe(
         tap(() => console.log(`✅ User ${userID} deleted successfully`))
