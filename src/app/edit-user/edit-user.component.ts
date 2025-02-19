@@ -8,14 +8,18 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-edit-user',
-  imports: [MatDialogModule, MatFormFieldModule, CommonModule, FormsModule, MatOptionModule, MatInputModule, MatSelectModule, MatButtonModule],
+  imports: [MatDialogModule, MatFormFieldModule, CommonModule, FormsModule, MatOptionModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule],
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.scss']
 })
 export class EditUserComponent {
+
+  passwordVisible = false;
+
   constructor(
     public dialogRef: MatDialogRef<EditUserComponent>,
     @Inject(MAT_DIALOG_DATA) public user: User
@@ -37,6 +41,10 @@ export class EditUserComponent {
   
     console.log("🛠 Sending update request for userID:", this.user.userID, this.user);
     this.dialogRef.close(this.user); // Send the user data back to the parent component
+  }
+
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
   }
   
   cancel(): void {

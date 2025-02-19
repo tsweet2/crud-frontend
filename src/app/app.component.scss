@@ -26,6 +26,11 @@
     flex-grow: 1;
 }
 
+mat-icon {
+    color: white !important; /* Ensures the settings icon stays white */
+}
+
+
 .menu-items {
     display: flex;
     gap: 15px;
@@ -63,4 +68,16 @@
     color: #555;
     width: 100%; /* Ensures it takes full width for centering */
 }
+
+.settings-menu-item {
+    padding: 10px 16px;
+    font-size: 14px;
+    color: #333;
+    transition: background 0.3s ease;
+    
+    &:hover {
+        background: #f4f6f8;
+    }
+}
+
 

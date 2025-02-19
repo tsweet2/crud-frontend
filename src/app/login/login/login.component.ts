@@ -25,8 +25,8 @@ export class LoginComponent {
   login() {
     this.errorMessage = '';
     this.authService.login(this.emailAddress, this.password).subscribe({
-      next: (response) => {
-        this.authService.storeToken(response.token);
+      next: (token) => {
+        this.authService.storeToken(token);
         this.router.navigate(['/user-list']);
       },
       error: () => {

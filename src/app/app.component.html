@@ -9,9 +9,12 @@
   <span class="spacer"></span>
 
   <!-- Settings Menu Trigger -->
-  <button *ngIf="isAuthenticated()" mat-icon-button class="menu-button settings-button" [matMenuTriggerFor]="settingsMenu">
-    <mat-icon>settings</mat-icon>
-  </button>
+  <ng-container *ngIf="isAuthenticated()">
+    <button mat-button [matMenuTriggerFor]="settingsMenu">
+      <mat-icon>settings</mat-icon>
+    </button>
+  </ng-container>
+  
 
   <!-- Logout Button -->
   <button *ngIf="isAuthenticated()" mat-button class="menu-button logout-button" (click)="logout()">LOGOUT</button>

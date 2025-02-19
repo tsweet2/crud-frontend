@@ -1,27 +1,34 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private apiUrl = 'http://localhost:8080/api/auth/login';
+  private userEmailSubject = new BehaviorSubject<string | null>(null);
+  userEmail$ = this.userEmailSubject.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {
+    // ✅ Initialize email from stored JWT (if available)
+    const token = this.getToken();
+    if (token) {
+      const email = this.getUserEmail();
+      this.userEmailSubject.next(email);
+    }
+  }
 
-  login(emailAddress: string, password: string): Observable<{ token: string; role: string }> {
-    return this.http.post<{ token: string; role: string }>(this.apiUrl, { emailAddress, password }).pipe(
-      tap((response) => {
+  login(email: string, password: string): Observable<string> {
+    return this.http.post<{ token: string }>(this.apiUrl, { emailAddress: email, password }).pipe(
+      tap((response: { token: string }) => {
         if (response.token) {
           this.storeToken(response.token); // ✅ Store JWT
-          localStorage.setItem('userRole', response.role); // ✅ Store Role
         }
       }),
-      map((response) => response)
+      map((response: { token: string }) => response.token)
     );
   }
 
@@ -30,16 +37,19 @@ export class AuthService {
     if (!token) return null;
     try {
       const decoded: any = jwtDecode(token);
-      return decoded.sub;
+      return decoded.sub || null; // ✅ Extract email from token
     } catch (error) {
-    console.error("Error decoding token:", error);
-    return null;
+      console.error("Error decoding token:", error);
+      return null;
     }
   }
 
-  
   storeToken(token: string): void {
-    localStorage.setItem('jwt', token); // ✅ Ensure JWT is stored properly
+    localStorage.setItem('jwt', token);
+    
+    // ✅ Decode token to extract email and update observable
+    const email = this.getUserEmail();
+    this.userEmailSubject.next(email);
   }
 
   getToken(): string | null {
@@ -47,16 +57,17 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    const token = this.getToken();
     return !!this.getToken(); // ✅ Check if user is authenticated
   }
 
   logout(): void {
-    if(confirm("Are you sure you want to log out?")) {
-    localStorage.removeItem('jwt'); // ✅ Remove stored token
-    this.router.navigate(['/login']); // ✅ Redirect to login page
+    console.log("🚪 Logging out user...");
+    localStorage.removeItem('jwt'); // ✅ Remove JWT
+    this.userEmailSubject.next(null); // ✅ Clear observable state
+    this.router.navigate(['/login']); // ✅ Redirect to login
   }
 }
-}
+
+
 
 

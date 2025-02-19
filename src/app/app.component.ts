@@ -22,7 +22,10 @@ export class AppComponent implements OnInit {
   title = 'crud-frontend';
 
   ngOnInit(): void {
-    this.userEmail = this.authService.getUserEmail();
+    this.authService.userEmail$.subscribe(email => {
+      this.userEmail = email;
+    }
+    );
   }
 
   isAuthenticated(): boolean {

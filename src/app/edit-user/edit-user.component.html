@@ -17,10 +17,19 @@
       <input matInput type="email" [(ngModel)]="user.emailAddress" name="emailAddress" required>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="form-field">
-      <mat-label>Reset Initial Password</mat-label>
-      <input matInput type="password" [(ngModel)]="user.password" name="password">
-    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput 
+               [type]="passwordVisible ? 'text' : 'password'" 
+               [(ngModel)]="user.password" 
+               name="password"
+               placeholder="Enter new password (leave blank to keep current)"
+        >
+        <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button">
+          <mat-icon>{{ passwordVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+      
 
     <mat-form-field appearance="outline" class="form-field">
       <mat-label>Role</mat-label>
