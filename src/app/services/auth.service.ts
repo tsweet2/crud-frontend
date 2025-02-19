@@ -11,14 +11,15 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login(email: string, password: string): Observable<string> {
-    return this.http.post<{ token: string }>(this.apiUrl, { emailAddress: email, password }).pipe(
-      tap((response: { token: string }) => {
+  login(email: string, password: string): Observable<{ token: string; role: string }> {
+    return this.http.post<{ token: string; role: string }>(this.apiUrl, { email, password }).pipe(
+      tap((response) => {
         if (response.token) {
           this.storeToken(response.token); // ✅ Store JWT
+          localStorage.setItem('userRole', response.role); // ✅ Store Role
         }
       }),
-      map((response: { token: string }) => response.token)
+      map((response) => response)
     );
   }
 

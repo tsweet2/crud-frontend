@@ -22,17 +22,23 @@ export class EditUserComponent {
   ) {}
 
   save(): void {
-    console.log(this.user);
     if (!this.user.userID) {
       console.error("❌ Error: userID is missing, cannot update user.");
       return;
     }
   
-    console.log("🛠 Sending update request for userID:", this.user.userID);
-    this.dialogRef.close(this.user); // Send the user data back to the parent
+    // ✅ Ensure password field is included in the request only if it's changed
+    if (!this.user.password || this.user.password.trim() === '') {
+      console.log("🔹 No new password provided, keeping existing password.");
+      delete this.user.password; // Prevent overwriting password with empty value
+    } else {
+      console.log("🔹 Password changed, sending updated password.");
+    }
+  
+    console.log("🛠 Sending update request for userID:", this.user.userID, this.user);
+    this.dialogRef.close(this.user); // Send the user data back to the parent component
   }
   
-
   cancel(): void {
     console.log("❌ Edit canceled, closing dialog.");
     this.dialogRef.close();
